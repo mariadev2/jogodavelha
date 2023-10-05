@@ -15,7 +15,7 @@ export default function Text({children, weight, style, ...props}: TextProps):Rea
     if (weight === '400') {
         fontFamily = 'DeliusUnicase_400Regular'
     }else{
-        fontFamily = 'DeliusUnicase_700Regular'
+        fontFamily = 'DeliusUnicase_700Bold'
     }
     return (
             <NativeText {...props} 
