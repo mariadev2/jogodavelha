@@ -11,11 +11,23 @@ type HomeProps = {
 
 export default function Home({navigation} : HomeProps) : ReactElement{
     return(
+        <View>
+
         <View style={styles.container}>
             <Text>Pagina Home</Text>
             <Button title="Game" onPress={()=>{
                 navigation.navigate("Game",{gameID:"jhui"})
             }}/>
         </View>
+
+
+        <View style={styles.container}>
+        <Text>Pagina Home 2</Text>
+        <Button title="Game 2" onPress={()=>{
+            navigation.navigate("Game",{gameID:"jhui2"})
+        }}/>
+        </View>
+
+    </View>
     )
 }
