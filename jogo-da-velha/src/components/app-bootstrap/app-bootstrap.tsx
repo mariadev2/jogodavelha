@@ -1,5 +1,4 @@
-import React, {ReactNode, ReactElement} from "react";
-import {View, Text} from 'react-native'
+import React, {ReactNode, ReactElement} from "react"
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts,
    DeliusUnicase_400Regular, 

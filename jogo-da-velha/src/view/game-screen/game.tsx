@@ -1,11 +1,15 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import styles from './game-styles';
+import React, { ReactElement } from 'react';
+import {Text, SafeAreaView, ScrollView} from 'react-native';
+import BackgroundPage  from "../../components/background-page/background-page";
 
-export default function Game(){
+export default function Game(): ReactElement{
     return (
-        <View style={styles.container}> 
-            <Text>Game</Text>
-        </View>
+        <SafeAreaView>
+            <ScrollView > 
+                <BackgroundPage>
+                    <Text>Game</Text>
+                </BackgroundPage>
+            </ScrollView>
+        </SafeAreaView>
     )
 }

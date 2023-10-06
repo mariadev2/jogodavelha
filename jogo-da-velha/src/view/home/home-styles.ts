@@ -1,11 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
-    }
+        justifyContent: "center",
+        width : width,
+        height: height
+    },
 })
 
 export default styles;

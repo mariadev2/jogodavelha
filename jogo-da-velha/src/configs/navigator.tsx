@@ -12,8 +12,8 @@ export type StackNavigatorParams = {
 
 export default function Navigator(): ReactElement {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='home' component={Home}/>
         <Stack.Screen name='game' component={Game}/>
       </Stack.Navigator>
