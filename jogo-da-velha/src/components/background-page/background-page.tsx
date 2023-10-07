@@ -1,17 +1,25 @@
-import { ImageBackground } from 'react-native'
+import {  ScrollView, Image, View} from 'react-native'
 import React, { ReactElement, ReactNode } from 'react'
 import styles from '../../view/home/home-styles';
 
-const image = '../../utils/assets/img-background.png';
+
+
+const iconBottom = '../../utils/assets/icon-button.png';
+const iconTop = '../../utils/assets/icon-top.png';
 
 type BackgroundProps = {
-    children: ReactNode
+    children: ReactNode,
 }
 
 export default function BackgroundPage({children}: BackgroundProps): ReactElement {
   return (
-        <ImageBackground source={require(image)} style={styles.container} resizeMode="cover">
-           {children}
-        </ImageBackground>
+    <ScrollView > 
+        <View style={styles.container}>
+          <Image source={require(iconTop)} style={styles.iconBottom}/>
+          <Image source={require(iconBottom)} style={styles.iconTop}/>
+          {children}
+        </View>
+    </ScrollView>
+        
   )
 }
