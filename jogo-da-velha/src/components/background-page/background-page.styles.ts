@@ -8,22 +8,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 50,
         backgroundColor: '#FFFFFF',
-        width : width,
+        width :  width,
         height: height
     },
-    logo:{
-        maxWidth: '60%',
-        resizeMode: 'contain',
-        height: 100
+    iconTop:{
+        top: 0,
+        height: 178,
+        width: 175,
+        right: -50,
+        position: "absolute",
+       
     },
-    buttonContainer:{
-        marginTop: 40
-    },
-    oldWoman:{
-        width: 170,
-        height: 170,
-        resizeMode: 'contain',
-        maxWidth: 170
+    iconBottom:{
+        bottom: 15,
+        height: 95,
+        width: 105,
+        left: 15,
+        position: "absolute",
+       
     }
 })
 

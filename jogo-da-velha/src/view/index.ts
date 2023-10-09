@@ -1,2 +1,2 @@
 export {default as Home} from './home/home';
-export {default as Game} from './game-screen/game';
+export {default as SinglePlayerGame} from './game-screen/single-game/single-game';

@@ -11,18 +11,17 @@ type HomeProps = {
     navigation: NativeStackNavigationProp<StackNavigatorParams, 'home'>
 }
 
-const iconLogo = '../../utils/assets/logo-app.png';
-const iconOldWoman = '../../utils/assets/old-woman.png';
-
 export default function Home({navigation}:HomeProps): ReactElement{
     return (
         <SafeAreaView>
             <StatusBar backgroundColor="#E78F31" style="dark" />
                 <BackgroundPage>
-                       <Image style={styles.logo} source={require(iconLogo)} />
-                       <Image style={styles.oldWoman} source={require(iconOldWoman)} />
+                       <Image style={styles.logo} source={require('../../utils/assets/logo-app.png')} />
+                       <Image style={styles.oldWoman} source={require('../../utils/assets/old-woman.png')} />
                        <View style={styles.buttonContainer}>
-                         <ButtonComponent title={"Jogar offline"}/>
+                         <ButtonComponent onPress={()=>{
+                            navigation.navigate("SinglePlayerGame")
+                         }} title={"Jogar offline"}/>
                          <ButtonComponent title={"Jogar online"}/>
                          <ButtonComponent title={"Login"}/>
                          <ButtonComponent title={"Configurações"}/>

@@ -6,7 +6,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: 'center',
         width : width,
         height: height
     }
