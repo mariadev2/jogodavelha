@@ -1,22 +1,29 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
 const styles = StyleSheet.create({
-    container:{
+    container:{        
         alignItems: "center",
+        justifyContent: "center",
         backgroundColor: "#FFFFFF",
-        marginTop:40
+        top:0,
+        width: width,
+        height: height 
+
                 
     },
-    logo:{
-        width:300,
-        height:150,
-        maxWidth:"60%",
-        resizeMode: 'contain',
+    background:{
+        position: "absolute",
+        //width: width,
+        //height: height,
+        width:414,
+        height:736,
+        
+
     },
-    bolinhas:{
-        alignItems: "baseline"
-    }
+ 
+      
   
     
 })
