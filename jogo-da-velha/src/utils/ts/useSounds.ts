@@ -55,19 +55,19 @@ export default function useSounds(): (sound: SoundType) => void {
         const drawSoundObject = new Audio.Sound();
 
         const loadSounds = async () => {
-            await popSoundObject.loadAsync(require("../../../utils/assets/audio/pop_1.wav"));
+            await popSoundObject.loadAsync(require("../../utils/assets/audio/pop_1.wav"));
             popSoundRef.current = popSoundObject;
 
-            await pop2SoundObject.loadAsync(require("../../../utils/assets/audio/pop_2.wav"));
+            await pop2SoundObject.loadAsync(require("../../utils/assets/audio/pop_2.wav"));
             pop2SoundRef.current = pop2SoundObject;
 
-            await winSoundObject.loadAsync(require("../../../utils/assets/audio/win.mp3"));
+            await winSoundObject.loadAsync(require("../../utils/assets/audio/win.mp3"));
             winSoundRef.current = winSoundObject;
 
-            await lossSoundObject.loadAsync(require("../../../utils/assets/audio/loss.mp3"));
+            await lossSoundObject.loadAsync(require("../../utils/assets/audio/loss.mp3"));
             lossSoundRef.current = lossSoundObject;
 
-            await drawSoundObject.loadAsync(require("../../../utils/assets/audio/draw.mp3"));
+            await drawSoundObject.loadAsync(require("../../utils/assets/audio/draw.mp3"));
             drawSoundRef.current = drawSoundObject;
         };
         loadSounds();

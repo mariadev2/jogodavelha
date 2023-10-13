@@ -27,7 +27,7 @@ export const isFull = (state: BoardState): boolean =>{
     return state.every( cell => cell);
 }
 
-export const getAvaliableMoves = (state: BoardState): Moves[] =>{
+export const getAvailableMoves = (state: BoardState): Moves[] => {
     const moves: Moves[] = [];
     state.forEach((cell, index) => {
         if (cell === null) {
@@ -35,7 +35,7 @@ export const getAvaliableMoves = (state: BoardState): Moves[] =>{
         }
     });
     return moves;
-}
+};
 /**
  * The function `isTerminal` checks if the current state of a tic-tac-toe board is a terminal state
  * (win, draw, or ongoing game) and returns the result.

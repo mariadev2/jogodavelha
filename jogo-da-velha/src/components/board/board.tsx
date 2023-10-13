@@ -1,33 +1,39 @@
-import { View, TouchableHighlight } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React, { ReactElement } from 'react'
 import Text from '../text/text';
-import { BoardState } from '../../utils';
+import { BoardResult, BoardState } from '../../utils';
+import BoardLine from './board-line';
+import styles from './board.styles';
 
 type BoardProps = {
     state: BoardState;
     size: number;
     disabled?: boolean;
+    gameResult?: BoardResult | false;
     onCellPress?: (index: number) => void;
 }
 
-export default function Board({state, size, disabled, onCellPress}: BoardProps): ReactElement {
+export default function Board({state, size, disabled, onCellPress, gameResult}: BoardProps): ReactElement {
   return (
-    <View style={{width: size, height: size, backgroundColor: '#fff', flexDirection: 'row', flexWrap: 'wrap' }}>
+    <View style={[{width: size, height: size}, styles.board]}>
         
       {state.map((cell, index)=>
             { 
                 return (
-                    <TouchableHighlight 
+                  
+                    <TouchableOpacity  
                         disabled = { cell != null || disabled}
                         onPress={()=> onCellPress && onCellPress(index)}
                         key={index} 
-                        style={{width: '33.33333%', height: '33.33333%', borderWidth: 1, alignItems: 'center', justifyContent: 'center'}}>
-                            <Text style={{fontSize: size / 8}}>{cell}</Text>
-                    </TouchableHighlight>
+                        style={[styles.cell, styles[`cell${index}` as 'cell' ] ]}>
+                        <Text style={{fontSize: size / 8}}>{cell}</Text>
+                    </TouchableOpacity >
+    
                 )
             }
         )
       }
+      {gameResult && <BoardLine gameResult={gameResult} size={size}/>}
     </View>
   )
 }
