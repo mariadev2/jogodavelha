@@ -106,7 +106,7 @@ export default function SinglePlayerGame(): ReactElement{
                         <Image style={styles.logo} source={require('../../../utils/assets/logo-app.png')} />
                         <View>
                             <Text style={styles.difficulty}>
-                            Dificuldade
+                            Dificuldade: Difícil
                             </Text>
                             <View style={styles.results}>
                                 <View style={styles.resultsBox}>

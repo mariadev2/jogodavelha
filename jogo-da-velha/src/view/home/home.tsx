@@ -8,7 +8,7 @@ import { ButtonComponent,  BackgroundPage } from '../../components';
 
 
 type HomeProps = {
-    navigation: NativeStackNavigationProp<StackNavigatorParams, 'home'>
+    navigation: NativeStackNavigationProp<StackNavigatorParams, 'Home'>
 }
 
 export default function Home({navigation}:HomeProps): ReactElement{
@@ -24,7 +24,9 @@ export default function Home({navigation}:HomeProps): ReactElement{
                          }} title={"Jogar offline"}/>
                          <ButtonComponent title={"Jogar online"}/>
                          <ButtonComponent title={"Login"}/>
-                         <ButtonComponent title={"Configurações"}/>
+                         <ButtonComponent onPress={()=>{
+                            navigation.navigate("Settings")
+                         }} title={"Configurações"}/>
                        </View>
                 </BackgroundPage>
         </SafeAreaView>
