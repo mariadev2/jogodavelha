@@ -1,56 +1,18 @@
-import { View, SafeAreaView, ScrollView, Image, TouchableOpacity, Switch, Alert } from 'react-native'
-import React, { ReactElement, useEffect, useState } from 'react'
+import { View, SafeAreaView, ScrollView, Image, TouchableOpacity, Switch} from 'react-native'
+import React, { ReactElement } from 'react'
 import { Text } from '../../components'
 import styles from './settings.style'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { difficulties, useSettings } from '../../contexts/settings-context';
 
-const difficulty = {
-    '1': 'Fácil',
-    '3': 'Médio',
-    '4': 'Difícil',
-    '-1': 'Impossivel'
-}
 
-type SettingsType = {
-    difficulty: keyof typeof difficulty;
-    sounds: boolean;
-}
-
-const defaultSettings:SettingsType = {
-    difficulty: '-1',
-    sounds: true
-}
 
 
 
 
 export default function Settings(): ReactElement | null {
-    const [settings, setSettings] = useState<SettingsType | null>(null);
 
-    const saveSettings = async <T extends keyof SettingsType>(setting: T, value: SettingsType[T]) =>{
-        try {
-            const oldSettings = settings ? settings : defaultSettings;
-            const newSettings = {...oldSettings, [setting]: value};
-            const jsonSettings = JSON.stringify(newSettings);
-            await AsyncStorage.setItem('@settings', jsonSettings)
-            setSettings(newSettings);
-        } catch (error) {
-            Alert.alert('eero')
-        }
-    }
-
-    const loadSettings = async () =>{
-        try {
-            const settings = await AsyncStorage.getItem('@settings');
-            settings != null ? setSettings(JSON.parse(settings)) : setSettings(defaultSettings);
-        } catch (error) {
-            setSettings(defaultSettings);
-        }
-    }
-
-    useEffect(() => {
-        loadSettings();
-    }, [])
+    
+    const {settings, saveSettings}  = useSettings();
     
 
     if (!settings) return null;
@@ -62,11 +24,11 @@ export default function Settings(): ReactElement | null {
                     <View style={styles.content}>
                         <Text style={styles.label}>Dificuldade do BOT:</Text>
                         <View style={styles.choices}>
-                            {Object.keys(difficulty).map(nivel =>{
+                            {Object.keys(difficulties).map(nivel =>{
                                 return (
                                     <TouchableOpacity 
                                     onPress={()=>{
-                                        saveSettings('difficulty', nivel as keyof typeof difficulty )
+                                        saveSettings('difficulty', nivel as keyof typeof difficulties )
                                     }}
                                         key={nivel} 
                                         style={[styles.choice, 
@@ -75,7 +37,7 @@ export default function Settings(): ReactElement | null {
                                                 : 'rgba(218, 57, 65, 0.51)'
                                             }
                                         ]}>
-                                        <Text>{difficulty[nivel as keyof typeof difficulty]}</Text>
+                                        <Text>{difficulties[nivel as keyof typeof difficulties]}</Text>
                                     </TouchableOpacity>
                                 )
                             })}

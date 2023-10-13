@@ -23,25 +23,6 @@ export default function useSounds(): (sound: SoundType) => void {
             status &&
                 status.isLoaded &&
                 soundsMap[sound].current?.replayAsync();
-            // if (settings?.haptics) {
-            //     switch (sound) {
-            //         case "pop1":
-            //         case "pop2":
-            //             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            //             break;
-            //         case "win":
-            //             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            //             break;
-            //         case "loss":
-            //             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-            //             break;
-            //         case "draw":
-            //             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            // }
         } catch (error) {
             console.log(error);
         }

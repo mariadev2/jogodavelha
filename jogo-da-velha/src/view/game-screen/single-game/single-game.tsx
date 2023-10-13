@@ -5,6 +5,8 @@ import { Board, Text } from '../../../components';
 import styles from './single-game-styles.styles';
 import { BoardState, Cell, getBestMove, isEmpty, isTerminal, useSounds } from '../../../utils';
 import Button from '../../../components/button/button';
+import { useSettings, difficulties } from '../../../contexts/settings-context';
+
 
 const widthSreen = Dimensions.get("screen").width;
 
@@ -16,6 +18,7 @@ export default function SinglePlayerGame(): ReactElement{
         null, null, null
     ]);
     const playSound = useSounds();
+    const {settings} = useSettings();
     const [turn, setTurn] = useState<'human' | 'bot'>(Math.random() < 0.5 ? 'human' : 'bot');
     const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
     const gameResult = isTerminal(state);
@@ -90,6 +93,7 @@ export default function SinglePlayerGame(): ReactElement{
                         state,
                         !isHumanMaximizing,
                         0,
+                        parseInt(settings ? settings.difficulty : '-1')
                     );
                     insertCell(best, isHumanMaximizing ? "o" : "x");
                     setTurn('human');
@@ -106,7 +110,7 @@ export default function SinglePlayerGame(): ReactElement{
                         <Image style={styles.logo} source={require('../../../utils/assets/logo-app.png')} />
                         <View>
                             <Text style={styles.difficulty}>
-                            Dificuldade: Difícil
+                            Dificuldade: {settings ? difficulties[settings.difficulty] : "Impossivel"}
                             </Text>
                             <View style={styles.results}>
                                 <View style={styles.resultsBox}>
