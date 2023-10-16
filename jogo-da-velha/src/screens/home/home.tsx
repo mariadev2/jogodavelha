@@ -19,7 +19,7 @@ export default function Home({navigation} : HomeProps) : ReactElement{
                 <Button onPress= {() => alert(true)} title="JOGADOR ÚNICO"/>
                 <Button onPress= {() => alert(true)} title="JOGAR ONLINE"/>
                 <Button onPress= {() => alert(true)} title="ENTRAR"/>
-                <Button onPress= {() => navigation.navigate(Game)} title="CONFIGURAÇÕES"/>
+                <Button onPress= {() => navigation.navigate("Game",{gameID:"ata"})} title="CONFIGURAÇÕES"/>
             </View>
             </BackgroundPage>
     )
