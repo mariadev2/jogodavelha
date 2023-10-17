@@ -5,7 +5,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack/lib/ty
 import { StackNavigatorParams } from "../../config/navigator";
 import { GradientBackground, Button, BackgroundPage } from "../../components";
 import { LinearGradient } from "expo-linear-gradient";
-import Game from "../game/game";
+import Game from "../single-player-game/single-player-game";
+import Cadastro from "../cadastro/cadastro";
+
  
 type HomeProps = {
     navigation: NativeStackNavigationProp<StackNavigatorParams,"Home">
@@ -15,11 +17,15 @@ type HomeProps = {
 export default function Home({navigation} : HomeProps) : ReactElement{
     return(
         <BackgroundPage>
+            <Image source={require('../../components/imagens/old-woman.png')} style = {styles.iconevelha}/>
+            <Image source={require('../../components/imagens/simbolojogo.png')} style = {styles.iconejogo}/>
             <View style= {styles.container}>
-                <Button onPress= {() => alert(true)} title="JOGADOR ÚNICO"/>
+                <Button onPress= {() => navigation.navigate("SinglePlayerGame")} title="JOGADOR ÚNICO"/>
                 <Button onPress= {() => alert(true)} title="JOGAR ONLINE"/>
                 <Button onPress= {() => alert(true)} title="ENTRAR"/>
-                <Button onPress= {() => navigation.navigate("Game",{gameID:"ata"})} title="CONFIGURAÇÕES"/>
+                <Button onPress= {() => alert(true)} title="CONFIGURAÇÕES"/>
+                <Button onPress= {() => navigation.navigate("Cadastro")} title="CADASTRO"/>
+
             </View>
             </BackgroundPage>
     )

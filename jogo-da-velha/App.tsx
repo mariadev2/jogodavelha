@@ -1,4 +1,4 @@
-import App from "./src/utils/index";
+import App from "./src/index";
 export default App;
 
 
