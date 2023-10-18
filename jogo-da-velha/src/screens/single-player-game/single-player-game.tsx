@@ -31,6 +31,7 @@ export default function SinglePlayerGame() : ReactElement{
 
 
     const handleOnCellPressed = (cell: number): void => {
+        console.log(cell)
         if(turn !== "HUMAN") return;
         insertCell(cell,isHumanMaximizing ? "x" : "o");
         setTurn("BOT");
@@ -38,18 +39,23 @@ export default function SinglePlayerGame() : ReactElement{
         useEffect(() => {
             if(gameResult){
                 alert("Game over");
+
             }else{
                 if(turn === "BOT"){
                     if(isEmpy(state)){
                         const centerAndCorners = [0,2,6,8,4];
-                        const firstMove = centerAndCorners[Math.floor(Math.random() * centerAndCorners.length)]
+                        const firstMove = centerAndCorners[Math.floor(Math.random() * centerAndCorners.length)];
                         insertCell(firstMove, "x");
                         setIsHumanMaximizing(false);
                         setTurn("HUMAN");
 
 
                     }else {
-                        const best = getBestMove(state, !isHumanMaximizing,0,-1);
+                        const best = getBestMove(
+                            state, 
+                            !isHumanMaximizing,
+                            0,
+                            -1);
 
                         insertCell(best, isHumanMaximizing ? "o" : "x");
                         setTurn("HUMAN");
@@ -57,7 +63,7 @@ export default function SinglePlayerGame() : ReactElement{
                     }
                 }
             }
-        }, [state, turn])
+        }, [state, turn]);
 
     return(
         <BackgroundPage>
@@ -65,8 +71,9 @@ export default function SinglePlayerGame() : ReactElement{
                 
                 <Board 
                     disabled = {Boolean(isTerminal(state)) || turn !== "HUMAN" }
-                    onCellPressed = {(cell) => {
-                        handleOnCellPressed(cell)
+                    onCellPressed = {cell => {
+                        console.log(cell)
+                        handleOnCellPressed(cell);
                 }} 
                 
                 state= {state}
