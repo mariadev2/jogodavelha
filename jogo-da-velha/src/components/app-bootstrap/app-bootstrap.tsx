@@ -1,4 +1,4 @@
-import React, {ReactNode, ReactElement} from "react"
+import React, {ReactNode, ReactElement, useState} from "react"
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts,
    DeliusUnicase_400Regular, 
@@ -15,6 +15,7 @@ export default function AppBootstrap({children}: AppBootstrapProps): ReactElemen
         DeliusUnicase_700Bold,
       })
     fontLoaded ? SplashScreen.hideAsync() : null;
+    const [authLoged, setAuthLoged] = useState(false);
     return fontLoaded ? <>{children}</> :  <></>
     
 }

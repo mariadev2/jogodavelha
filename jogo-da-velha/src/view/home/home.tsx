@@ -23,7 +23,9 @@ export default function Home({navigation}:HomeProps): ReactElement{
                             navigation.navigate("SinglePlayerGame")
                          }} title={"Jogar offline"}/>
                          <ButtonComponent title={"Jogar online"}/>
-                         <ButtonComponent title={"Login"}/>
+                         <ButtonComponent title={"Login"} onPress={()=>{
+                            navigation.navigate("Login")
+                         }}/>
                          <ButtonComponent onPress={()=>{
                             navigation.navigate("Settings")
                          }} title={"Configurações"}/>

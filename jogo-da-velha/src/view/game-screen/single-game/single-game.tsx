@@ -1,10 +1,10 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import {SafeAreaView, ScrollView, View, Dimensions, Image} from 'react-native';
+import {SafeAreaView, ScrollView, View, Dimensions, Image, Button} from 'react-native';
 import BackgroundPage  from "../../../components/background-page/background-page";
 import { Board, Text } from '../../../components';
 import styles from './single-game-styles.styles';
 import { BoardState, Cell, getBestMove, isEmpty, isTerminal, useSounds } from '../../../utils';
-import Button from '../../../components/button/button';
+//import Button from '../../../components/button/button';
 import { useSettings, difficulties } from '../../../contexts/settings-context';
 
 
@@ -129,6 +129,7 @@ export default function SinglePlayerGame(): ReactElement{
                         </View>
                         <Board 
                             disabled = {Boolean(isTerminal(state)) || turn != 'human'}
+                            
                             onCellPress={(index)=>{
                                 handleOnCellPressed(index);
                             }}
