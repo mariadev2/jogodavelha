@@ -38,7 +38,9 @@ export default function SinglePlayerGame() : ReactElement{
     };
         useEffect(() => {
             if(gameResult){
-                alert("Game over");
+                setTimeout(() => {
+                alert('Game over')
+            }, 200);
 
             }else{
                 if(turn === "BOT"){

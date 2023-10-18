@@ -24,7 +24,7 @@ export default function Board({state,size,disabled,onCellPressed}:BoardProps) : 
          {state.map((cell,index)=> {
             return(
                 <TouchableOpacity 
-                disabled={cell == null || disabled}
+                disabled={cell != null || disabled}
                 onPress={() => onCellPressed 
                     && onCellPressed(index)}
                 
