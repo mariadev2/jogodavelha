@@ -19,7 +19,6 @@ export default function SinglePlayerGame() : ReactElement{
 
     const [turn,setTurn] = useState <"HUMAN" | "BOT">(Math.random() < 0.5 ? "HUMAN" : "BOT");
     const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
-    const popSoundRef = useRef<Audio.Sound | null>(null);
     const pop2SoundRef = useRef<Audio.Sound | null>(null);
     const drawSoundRef = useRef<Audio.Sound | null>(null);
     const lostSoundRef = useRef<Audio.Sound | null>(null);
@@ -37,11 +36,8 @@ export default function SinglePlayerGame() : ReactElement{
 
             try {
                 symbol === "x" 
-                ? popSoundRef.current?.replayAsync():
-                 pop2SoundRef.current?.replayAsync();
-                 drawSoundRef.current?.replayAsync();
-                 winSoundRef.current?.replayAsync();
-                 lostSoundRef.current?.replayAsync();
+                ?pop2SoundRef.current?.replayAsync():
+                 
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
 
@@ -122,7 +118,7 @@ export default function SinglePlayerGame() : ReactElement{
                             state, 
                             !isHumanMaximizing,
                             0,
-                            -1);
+                            2);
 
                         insertCell(best, isHumanMaximizing ? "o" : "x");
                         setTurn("HUMAN");
@@ -134,7 +130,6 @@ export default function SinglePlayerGame() : ReactElement{
     
     useEffect(() => {
         
-        const popSoundObject = new Audio.Sound();
         const pop2SoundObject = new Audio.Sound();
         const drawSoundObject = new Audio.Sound();
         const lostSoundObject = new Audio.Sound();
@@ -142,12 +137,10 @@ export default function SinglePlayerGame() : ReactElement{
 
         const LoadSounds = async () => {
 
-            await popSoundObject.loadAsync(require
-            ('../../components/sons/click1.mp3'));
-            popSoundRef.current = popSoundObject;
+            
 
             await pop2SoundObject.loadAsync(require
-                ('../../components/sons/click.mp3'));
+                ('../../components/sons/click1.mp3'));
                 pop2SoundRef.current = pop2SoundObject;
 
             await drawSoundObject.loadAsync(require
@@ -168,7 +161,6 @@ export default function SinglePlayerGame() : ReactElement{
 
         return () => {
             pop2SoundObject && pop2SoundObject.unloadAsync();
-            popSoundObject && popSoundObject.unloadAsync();
             drawSoundObject && drawSoundObject.unloadAsync();
             lostSoundObject && lostSoundObject.unloadAsync();
             winSoundObject && winSoundObject.unloadAsync();
