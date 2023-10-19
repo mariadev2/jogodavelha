@@ -18,12 +18,11 @@ export default function Login(): ReactElement {
   const login = async () => {
     setLoading(true);
     const {username, password} = form;
-    console.log(username, password);
     try {
-        const response = await Auth.signIn(username, password)
-        console.log(response);
+        const user = await Auth.signIn(username, password)
+        await Auth.completeNewPassword(user, password)
+        
     } catch (error) {
-        console.log(error);
         Alert.alert('Usuário não existe')
     }
     setLoading(false);
