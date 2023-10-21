@@ -1,7 +1,7 @@
 import React, {ReactNode, ReactElement, useState, useEffect} from "react"
 import * as SplashScreen from 'expo-splash-screen';
 import {  useAuth } from "../../contexts/auth-context";
-import { Auth } from "aws-amplify";
+import { Auth , Hub} from "aws-amplify";
 import { useFonts,
    DeliusUnicase_400Regular, 
    DeliusUnicase_700Bold } from "@expo-google-fonts/delius-unicase";
@@ -34,6 +34,25 @@ export default function AppBootstrap({children}: AppBootstrapProps): ReactElemen
             setAuthLoged(true);
         }
         checkCurrentUser();
+        function hubListener(hubData: any) {
+            const { data, event } = hubData.payload;
+            switch (event) {
+                case "signOut":
+                    setUser(null);
+                    break;
+                case "signIn":
+                    setUser(data);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        Hub.listen("auth", hubListener);
+
+        return () => {
+            Hub.remove("auth", hubListener);
+        };
     }, [])
 
     return fontLoaded && authLoged ? <>{children}</> :  <></>

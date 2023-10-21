@@ -46,20 +46,20 @@ export default function Home({navigation}:HomeProps): ReactElement{
                          />
                         <ButtonComponent 
                             title={user ? 'Desconectar' : 'Login'} 
-                            onPress={()  => {
+                            onPress={async () => {
                                 if (user) {
-                                    setSigningOut(true);
+                                    setSigningOut(true)
                                     try {
-                                       
+                                       await Auth.signOut()
                                     } catch (error) {
                                         Alert.alert("Error!", "Error signing out!");
                                     }
-                                    setSigningOut(false);
+                                    setSigningOut(false)
                                 } else {
                                     navigation.navigate("Login");
                                 }
                             }} 
-                            loading={false} 
+                            loading={signingOut} 
                             style={undefined} 
                             styleText={undefined}
                         />

@@ -3,15 +3,20 @@ import React, { ReactElement } from 'react'
 import { Text } from '../../components'
 import styles from './settings.style'
 import { difficulties, useSettings } from '../../contexts/settings-context';
+import { useAuth } from '../../contexts/auth-context';
+import { StackNavigatorParams } from '../../configs/navigator';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
+type SettingsScreenNavigationProp = NativeStackNavigationProp<StackNavigatorParams, "Settings">;
 
+type SettingsProps = {
+    navigation: SettingsScreenNavigationProp;
+};
 
+export default function Settings({navigation}:SettingsProps): ReactElement | null {
 
-
-export default function Settings(): ReactElement | null {
-
-    
+    const { user } = useAuth();
     const {settings, saveSettings}  = useSettings();
     
 
@@ -57,6 +62,19 @@ export default function Settings(): ReactElement | null {
                                 }}
                             />
                         </View>
+                        {user && (
+                            <View style={[styles.field, styles.switchField]}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        navigation.navigate("ChangePassword");
+                                    }}
+                                >
+                                    <Text style={[styles.label, { textDecorationLine: "underline" }]}>
+                                        Alterar a senha
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        )}
                     </View>
                 </View>
             </ScrollView>

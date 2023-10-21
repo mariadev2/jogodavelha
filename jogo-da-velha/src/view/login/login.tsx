@@ -1,13 +1,20 @@
 import { View, Text, Image, TouchableOpacity, TextInput as NativeTextInput, Alert } from 'react-native'
 import React, { ReactElement, useRef, useState } from 'react'
 import { BackgroundPage, ButtonComponent, TextInput  } from '../../components'
+import { NativeStackNavigationProp} from "@react-navigation/native-stack";
+import { StackNavigatorParams } from "../../configs/navigator";
 import styles from './login.styles'
 import { Auth } from "aws-amplify";
 
-export default function Login(): ReactElement {
+
+type LoginProps = {
+    navigation: NativeStackNavigationProp<StackNavigatorParams, 'Home'>
+}
+
+export default function Login({navigation}: LoginProps): ReactElement {
   const passwordRef = useRef<NativeTextInput | null>(null);
   const [form, setForm] = useState({
-    username: 'test2',
+    username: 'Nemo32',
     password: 'test123456'
   })
   const [loading, setLoading] = useState(false);
@@ -19,11 +26,11 @@ export default function Login(): ReactElement {
     setLoading(true);
     const {username, password} = form;
     try {
-        const user = await Auth.signIn(username, password)
-        await Auth.completeNewPassword(user, password)
+        await Auth.signIn(username, password)
+        navigation.navigate('Home');
         
     } catch (error) {
-        Alert.alert('Usuário não existe')
+        Alert.alert("Erro!", (error as Error).message || "Aconteceu um erro!");
     }
     setLoading(false);
 
@@ -58,10 +65,18 @@ export default function Login(): ReactElement {
                 }}
             />
            <View style={styles.contentLabels}> 
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={()=>{
+                    navigation.navigate('SignUp');
+                }}
+            >
                 <Text style={styles.labelGeneral}>Cadastre-se</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={()=>{
+                    navigation.navigate('ForgotPassword');
+                }}
+            >
                 <Text style={styles.labelGeneral}>Esqueceu a senha?</Text>
             </TouchableOpacity>
            </View>
