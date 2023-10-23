@@ -1,12 +1,14 @@
 import React, { ReactElement, useEffect, useState, useRef } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import styles from "./single-player-game.styles";
-import { BackgroundPage } from "../../components";
+import { BackgroundPage, Button } from "../../components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Board } from '../../components'
-import {getBestMove, isEmpy,isFull,isTerminal,getAvailableMoves, BoardState, Cell} from '../../utils'
+import {getBestMove, isEmpy,isTerminal,getAvailableMoves, BoardState, Cell} from '../../utils'
 import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
+import useSound from "../../utils/useSound";
+
 
 
 export default function SinglePlayerGame() : ReactElement{
@@ -19,11 +21,8 @@ export default function SinglePlayerGame() : ReactElement{
 
     const [turn,setTurn] = useState <"HUMAN" | "BOT">(Math.random() < 0.5 ? "HUMAN" : "BOT");
     const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
-    const pop2SoundRef = useRef<Audio.Sound | null>(null);
-    const drawSoundRef = useRef<Audio.Sound | null>(null);
-    const lostSoundRef = useRef<Audio.Sound | null>(null);
-    const winSoundRef = useRef<Audio.Sound | null>(null);
-
+    const playSound = useSound();
+    
     const gameResult = isTerminal(state);
 
     const insertCell = (cell: number, symbol:"x" | "o" ) : void => 
@@ -36,11 +35,7 @@ export default function SinglePlayerGame() : ReactElement{
 
             try {
                 symbol === "x" 
-                ?pop2SoundRef.current?.replayAsync():
-                 
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-
+                playSound("pop2");
             } catch(error){
                 console.log(error);
             }
@@ -59,7 +54,7 @@ export default function SinglePlayerGame() : ReactElement{
             return isHumanMaximizing ? "HUMAN" : "BOT";
         }
         if(winnerSymbol === "o"){
-            return isHumanMaximizing ? "HUMAN" : "BOT";
+            return isHumanMaximizing ? "BOT" : "HUMAN";
         }
         return "DRAW";
     };
@@ -67,39 +62,24 @@ export default function SinglePlayerGame() : ReactElement{
             if(gameResult){
                 const winner = getWinner(gameResult.winner);
                 if(winner === "HUMAN"){
-                    try{
-                    winSoundRef.current?.replayAsync();
-                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-                    }catch (error){
-                        console.log(error);
-                    }
+                    playSound("win");
                     setTimeout(() => {
                         alert('Você venceu!')
         
                     }, 200);                }
                 if(winner === "BOT"){
-                    try{
-                        lostSoundRef.current?.replayAsync();
-                        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-                        }catch (error){
-                            console.log(error);
-                        }
-                        setTimeout(() => {
-                            alert('Você perdeu!')
+                    playSound("lost")
+                    setTimeout(() => {
+                        alert('Você perdeu!')
             
-                        }, 200);
+                    }, 200);
                 }
                 if(winner === "DRAW"){
-                    try{
-                        drawSoundRef.current?.replayAsync();
-                        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-                        }catch (error){
-                            console.log(error);
-                        }
-                        setTimeout(() => {
-                            alert('Empate!')
-            
-                        }, 200);
+                    playSound("draw")
+
+                    setTimeout(() => {
+                        alert('Empate!')
+                    }, 200);
                 }
 
 
@@ -128,50 +108,12 @@ export default function SinglePlayerGame() : ReactElement{
             }
         }, [state, turn]);
     
-    useEffect(() => {
-        
-        const pop2SoundObject = new Audio.Sound();
-        const drawSoundObject = new Audio.Sound();
-        const lostSoundObject = new Audio.Sound();
-        const winSoundObject = new Audio.Sound();
-
-        const LoadSounds = async () => {
-
-            
-
-            await pop2SoundObject.loadAsync(require
-                ('../../components/sons/click1.mp3'));
-                pop2SoundRef.current = pop2SoundObject;
-
-            await drawSoundObject.loadAsync(require
-                ('../../components/sons/draw.mp3'));
-                drawSoundRef.current = drawSoundObject;
-
-            await lostSoundObject.loadAsync(require
-                ('../../components/sons/lost.mp3'));
-                lostSoundRef.current = lostSoundObject;
-
-            await winSoundObject.loadAsync(require
-                ('../../components/sons/win.mp3'));
-                winSoundRef.current = winSoundObject;
-            
-
-        };
-        LoadSounds();
-
-        return () => {
-            pop2SoundObject && pop2SoundObject.unloadAsync();
-            drawSoundObject && drawSoundObject.unloadAsync();
-            lostSoundObject && lostSoundObject.unloadAsync();
-            winSoundObject && winSoundObject.unloadAsync();
-
-        };
-
-    }, []);
+    
     return(
         <BackgroundPage>
             <SafeAreaView style= {styles.container}>
                 
+
                 <Board 
                     disabled = {Boolean(isTerminal(state)) || turn !== "HUMAN" }
                     onCellPressed = {cell => {
@@ -180,9 +122,10 @@ export default function SinglePlayerGame() : ReactElement{
                 }} 
                 
                 state= {state}
+                gameResult= {gameResult}
                 size={400}
                 />
-
+                <Button style={styles.button} onPress= {() => alert(true)} title="NOVO JOGO"/>
                 
             </SafeAreaView>
         </BackgroundPage>

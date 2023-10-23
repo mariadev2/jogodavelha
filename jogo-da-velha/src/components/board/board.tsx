@@ -1,16 +1,18 @@
 import React, { ReactElement } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Text from "../text/text"
-import { BoardState } from "../../utils";
+import { BoardState, BoardResult } from "../../utils";
+import BoardLine from "./board-line";
 
 type BoardProps = {
     state: BoardState;
     size: number;
     disabled?: boolean;
+    gameResult?: BoardResult | false; 
     onCellPressed? : (index:number) => void;
 }
 
-export default function Board({state,size,disabled,onCellPressed}:BoardProps) : ReactElement{
+export default function Board({gameResult,state,size,disabled,onCellPressed}:BoardProps) : ReactElement{
     return(
         <View 
             style= {{
@@ -45,6 +47,13 @@ export default function Board({state,size,disabled,onCellPressed}:BoardProps) : 
             )
 
          })}
+         {true && 
+         <BoardLine size={size} gameResult={{
+                                winner: "o", 
+                                diagonal: "COUNTER", 
+                                direction:"D"}}/>}
+        
+        
         </View>
     )
 
