@@ -1,23 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-tictactoe-dev-221308-authRole",
-      "UnauthRoleArn": "arn:aws:iam::278599373365:role/amplify-tictactoe-dev-221308-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::278599373365:role/amplify-tictactoe-dev-221308-authRole",
+      "AuthRoleName": "amplify-tictac-dev-113913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::278599373365:role/amplify-tictac-dev-113913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::278599373365:role/amplify-tictac-dev-113913-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-tictactoe-dev-221308-deployment",
-      "UnauthRoleName": "amplify-tictactoe-dev-221308-unauthRole",
-      "StackName": "amplify-tictactoe-dev-221308",
-      "StackId": "arn:aws:cloudformation:us-east-1:278599373365:stack/amplify-tictactoe-dev-221308/564b82e0-6c8a-11ee-92a4-0aa119094d91",
-      "AmplifyAppId": "d3uff3zuqzsii4"
+      "DeploymentBucketName": "amplify-tictac-dev-113913-deployment",
+      "UnauthRoleName": "amplify-tictac-dev-113913-unauthRole",
+      "StackName": "amplify-tictac-dev-113913",
+      "StackId": "arn:aws:cloudformation:us-east-1:278599373365:stack/amplify-tictac-dev-113913/1a747e10-727b-11ee-8847-0a6d7b11b12d",
+      "AmplifyAppId": "d12szzcvii2n3k"
     },
     "categories": {
-      "api": {
-        "tictactoe": {}
-      },
       "auth": {
-        "tictactoe3543628d": {},
-        "userPoolGroups": {}
+        "tictacced28c85": {}
       }
     }
   }

@@ -12,7 +12,6 @@ export type CreatePlayerInput = {
 
 export type ModelPlayerConditionInput = {
   cognitoID?: ModelStringInput | null,
-  username?: ModelStringInput | null,
   name?: ModelStringInput | null,
   email?: ModelStringInput | null,
   and?: Array< ModelPlayerConditionInput | null > | null,
@@ -72,15 +71,15 @@ export type Player = {
 };
 
 export type UpdatePlayerInput = {
-  id: string,
+  id?: string | null,
   cognitoID?: string | null,
-  username?: string | null,
+  username: string,
   name?: string | null,
   email?: string | null,
 };
 
 export type DeletePlayerInput = {
-  id: string,
+  username: string,
 };
 
 export type ModelPlayerFilterInput = {
@@ -110,50 +109,16 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelPlayerConnection = {
   __typename: "ModelPlayerConnection",
   items:  Array<Player | null >,
   nextToken?: string | null,
-};
-
-export type ModelSubscriptionPlayerFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  cognitoID?: ModelSubscriptionStringInput | null,
-  username?: ModelSubscriptionStringInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  email?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionPlayerFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPlayerFilterInput | null > | null,
-};
-
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
 };
 
 export type CreatePlayerMutationVariables = {
@@ -211,7 +176,7 @@ export type DeletePlayerMutation = {
 };
 
 export type GetPlayerQueryVariables = {
-  id: string,
+  username: string,
 };
 
 export type GetPlayerQuery = {
@@ -228,9 +193,11 @@ export type GetPlayerQuery = {
 };
 
 export type ListPlayersQueryVariables = {
+  username?: string | null,
   filter?: ModelPlayerFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPlayersQuery = {
@@ -250,10 +217,6 @@ export type ListPlayersQuery = {
   } | null,
 };
 
-export type OnCreatePlayerSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerFilterInput | null,
-};
-
 export type OnCreatePlayerSubscription = {
   onCreatePlayer?:  {
     __typename: "Player",
@@ -267,10 +230,6 @@ export type OnCreatePlayerSubscription = {
   } | null,
 };
 
-export type OnUpdatePlayerSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerFilterInput | null,
-};
-
 export type OnUpdatePlayerSubscription = {
   onUpdatePlayer?:  {
     __typename: "Player",
@@ -282,10 +241,6 @@ export type OnUpdatePlayerSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnDeletePlayerSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerFilterInput | null,
 };
 
 export type OnDeletePlayerSubscription = {
