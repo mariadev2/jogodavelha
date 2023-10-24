@@ -62,8 +62,7 @@ export default function BoardLine({size,gameResult} : BoardLineProps) : ReactEle
                     {
                         inputRange: [0,1],
                         outputRange: ["0%", "100%"]
-                    }
-                )
+                    })
                 }]}></Animated.View> }
            
            

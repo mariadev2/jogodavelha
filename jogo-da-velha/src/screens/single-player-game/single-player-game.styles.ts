@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         flex: 1,
     },
+    
+    button:{
+        fontSize: 10,
+        display: "flex"
+
+    },
     dificuldade:{
         textAlign: "left",
         fontSize: 26,
@@ -60,8 +66,7 @@ const styles = StyleSheet.create({
         padding: 30,
         borderWidth: 3,
         borderColor: colors.laranjaEscuro,
-        alignContent: "center"
-
+        alignItems: "center"
 
     },
     modalText:{

@@ -178,7 +178,7 @@ export default function SinglePlayerGame() : ReactElement{
                         {getWinner(gameResult.winner)===
                         "DRAW" && "Empate!!"}
                     </Text>
-                    <Button
+                    <Button style={styles.button}
                     onPress = {() => 
                         {
                             newGme()
