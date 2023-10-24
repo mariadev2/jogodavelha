@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import Text from "../text/text"
 import { BoardState, BoardResult } from "../../utils";
 import BoardLine from "./board-line";
+import styles from "./board.styles";
 
 type BoardProps = {
     state: BoardState;
@@ -15,14 +16,11 @@ type BoardProps = {
 export default function Board({gameResult,state,size,disabled,onCellPressed}:BoardProps) : ReactElement{
     return(
         <View 
-            style= {{
+            style=  {[styles.board, {
                 width: size,
                 height:size,
-                backgroundColor: '#DA3941',
-                flexDirection:"row",
-                flexWrap: "wrap"
+            }]}>
 
-        }}>
          {state.map((cell,index)=> {
             return(
                 <TouchableOpacity 
@@ -31,27 +29,24 @@ export default function Board({gameResult,state,size,disabled,onCellPressed}:Boa
                     && onCellPressed(index)}
                 
                 
-                style={{
-                    width:"33.33333%",
-                    height:"33.33333%",
-                    backgroundColor: "#fff",
-                    borderWidth: 1,
-                    alignItems: "center",
-                    justifyContent: "center"
-
-                }} key={index}>
-                    <Text style= {{
-                        fontSize:size/7, color: '#E78F31'
-                    }} >{cell}</Text>
+                style={[styles.cell,styles
+                    [`cell${index}`as "cell"]]}
+                key={index}
+                >
+                    <Text 
+                    style= {[ styles.cellText,
+                        {
+                        fontSize:size/7
+                        }
+                        ]} 
+                    >{cell}</Text>
                 </TouchableOpacity>
             )
 
          })}
-         {true && 
-         <BoardLine size={size} gameResult={{
-                                winner: "o", 
-                                diagonal: "COUNTER", 
-                                direction:"D"}}/>}
+         {gameResult && 
+         <BoardLine size={size} gameResult={gameResult} 
+         /> }
         
         
         </View>

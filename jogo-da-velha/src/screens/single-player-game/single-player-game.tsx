@@ -1,15 +1,14 @@
 import React, { ReactElement, useEffect, useState, useRef } from "react";
-import { View, Text } from "react-native";
 import styles from "./single-player-game.styles";
+import { Dimensions, View } from "react-native";
 import { BackgroundPage, Button } from "../../components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Board } from '../../components'
 import {getBestMove, isEmpy,isTerminal,getAvailableMoves, BoardState, Cell} from '../../utils'
-import { Audio } from 'expo-av';
-import * as Haptics from 'expo-haptics';
 import useSound from "../../utils/useSound";
+import Text from "../../components/text/text";
 
-
+const screen_width = Dimensions.get("screen").width;
 
 export default function SinglePlayerGame() : ReactElement{
 
@@ -21,6 +20,13 @@ export default function SinglePlayerGame() : ReactElement{
 
     const [turn,setTurn] = useState <"HUMAN" | "BOT">(Math.random() < 0.5 ? "HUMAN" : "BOT");
     const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
+    useState<boolean>(true);
+    const [gameCount, setGameCount] = useState({
+        wins: 0,
+        losts: 0,
+        draws: 0
+
+    });
     const playSound = useSound();
     
     const gameResult = isTerminal(state);
@@ -58,28 +64,32 @@ export default function SinglePlayerGame() : ReactElement{
         }
         return "DRAW";
     };
+
+    const newGme = () => {
+        setState([null,null,null,null,null,null,null,null,null]);
+        setTurn(Math.random() < 0.5 ? "HUMAN" : "BOT");
+    }
         useEffect(() => {
             if(gameResult){
                 const winner = getWinner(gameResult.winner);
                 if(winner === "HUMAN"){
                     playSound("win");
-                    setTimeout(() => {
-                        alert('Você venceu!')
-        
-                    }, 200);                }
+                    setGameCount({...gameCount, wins: gameCount.wins + 1});
+                    
+                
+                }
+
                 if(winner === "BOT"){
                     playSound("lost")
-                    setTimeout(() => {
-                        alert('Você perdeu!')
+                    setGameCount({...gameCount, losts: gameCount.losts + 1});
+
             
-                    }, 200);
                 }
+
                 if(winner === "DRAW"){
                     playSound("draw")
+                    setGameCount({...gameCount, draws: gameCount.draws + 1});
 
-                    setTimeout(() => {
-                        alert('Empate!')
-                    }, 200);
                 }
 
 
@@ -112,7 +122,37 @@ export default function SinglePlayerGame() : ReactElement{
     return(
         <BackgroundPage>
             <SafeAreaView style= {styles.container}>
-                
+                <View>
+                    <Text style={styles.dificuldade}>
+                        Dificuldade: Hard
+                    </Text>
+                </View>
+
+                <View style={styles.results}>
+                    <View style={styles.resultsBox}>
+                        <Text style={styles.resultTitles}>
+                            Vitórias
+                        </Text>
+                        <Text style={styles.resultCount}>{gameCount.wins}
+                        </Text>
+                    </View>
+
+                    <View style={styles.resultsBox}>
+                        <Text style={styles.resultTitles}>
+                            Empates
+                        </Text>
+                        <Text style={styles.resultCount}>{gameCount.draws}
+                        </Text>
+                    </View>
+
+                    <View style={styles.resultsBox}>
+                        <Text style={styles.resultTitles}>
+                            Perdas
+                        </Text>
+                        <Text style={styles.resultCount}>{gameCount.losts}
+                        </Text>
+                        </View>
+                </View>
 
                 <Board 
                     disabled = {Boolean(isTerminal(state)) || turn !== "HUMAN" }
@@ -123,10 +163,29 @@ export default function SinglePlayerGame() : ReactElement{
                 
                 state= {state}
                 gameResult= {gameResult}
-                size={400}
+                size={screen_width - 800}
+
                 />
-                <Button style={styles.button} onPress= {() => alert(true)} title="NOVO JOGO"/>
-                
+                {gameResult && (
+                <View style={styles.modal}>
+                    <Text style={styles.modalText}>
+                        {getWinner(gameResult.winner)===
+                        "HUMAN" && "PARABÉNS!\nVOCÊ GANHOU!"}
+
+                        {getWinner(gameResult.winner)===
+                        "BOT" && "OH NO, VOCÊ PERDEU!"}
+
+                        {getWinner(gameResult.winner)===
+                        "DRAW" && "Empate!!"}
+                    </Text>
+                    <Button
+                    onPress = {() => 
+                        {
+                            newGme()
+                        }}
+                        title="Jogar Novamente"/>
+                </View>
+                )}
             </SafeAreaView>
         </BackgroundPage>
     )

@@ -1,5 +1,6 @@
 import React , {ReactNode, ReactElement} from "react";
 import { Text as NativeText, TextProps as NativeTextProps} from "react-native";
+
 type TextProps = {
     weight : "400" | "700";
     children : ReactNode
