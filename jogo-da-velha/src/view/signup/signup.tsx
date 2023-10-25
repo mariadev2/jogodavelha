@@ -21,9 +21,9 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
     const emailRef = useRef<NativeTextInput | null>(null);
     const usernameRef = useRef<NativeTextInput | null>(null);
     const [form, setForm] = useState({
-        username: 'Nemo33',
-        email: 'niki.5@oabibleh.com',
-        name: 'Nemo nemo',
+        username: 'Nemotest',
+        email: 'nykeria1@oabibleh.com',
+        name: 'Nemo nemot',
         password: 'test123456'
     })
     const [loading, setLoading] = useState(false);

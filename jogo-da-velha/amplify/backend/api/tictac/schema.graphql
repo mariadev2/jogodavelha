@@ -2,10 +2,44 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Player @model{
+type Player 
+  @model 
+  @auth(
+        rules: [
+            { allow: private, provider: iam,  operations: [read, create, update, delete] }
+            { allow: owner, ownerField: "username", operations: [update] }
+            { allow: private, provider: userPools,  operations: [read, create, update, delete] }
+            { allow: public, provider: apiKey,  operations: [read, create, update, delete] }
+            
+        ]
+    ) {
   id: ID!
   cognitoID: String!
   username: String! @primaryKey
   name: String!
   email: AWSEmail!
+}
+
+type Game
+    @model {
+    id: ID!
+    status: GameStatus!
+    owners: [String!]!
+    initiator: String!
+    turn: String!
+    state: [Symbol]!
+    winner: String
+}
+
+enum GameStatus {
+    REQUESTED
+    DECLINED
+    ACTIVE
+    FINISHED
+    CANCELLED
+}
+
+enum Symbol {
+    x
+    o
 }

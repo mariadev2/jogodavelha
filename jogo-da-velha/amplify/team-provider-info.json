@@ -14,6 +14,16 @@
     "categories": {
       "auth": {
         "tictacced28c85": {}
+      },
+      "function": {
+        "postConfirmation": {
+          "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
+          "s3Key": "amplify-builds/postConfirmation-59434a7664426861546a-build.zip"
+        },
+        "preAuth": {
+          "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
+          "s3Key": "amplify-builds/preAuth-4e64684a497468377034-build.zip"
+        }
       }
     }
   }
