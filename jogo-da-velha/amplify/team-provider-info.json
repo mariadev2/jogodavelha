@@ -23,6 +23,18 @@
         "preAuth": {
           "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
           "s3Key": "amplify-builds/preAuth-4e64684a497468377034-build.zip"
+        },
+        "startGame": {
+          "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
+          "s3Key": "amplify-builds/startGame-6f73712f616731673943-build.zip"
+        },
+        "playMove": {
+          "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
+          "s3Key": "amplify-builds/playMove-41683154304f67376744-build.zip"
+        },
+        "AdminQueriesc2b6a7cf": {
+          "deploymentBucketName": "amplify-tictac-dev-113913-deployment",
+          "s3Key": "amplify-builds/AdminQueriesc2b6a7cf-2b61464e6f7a4f454843-build.zip"
         }
       }
     }

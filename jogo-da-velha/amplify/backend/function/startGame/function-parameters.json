@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "auth": {
+      "tictacced28c85": [
+        "create",
+        "read"
+      ]
+    },
+    "api": {
+      "tictac": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
