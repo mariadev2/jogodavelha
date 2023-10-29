@@ -7,6 +7,8 @@ import { Board } from '../../components'
 import {getBestMove, isEmpy,isTerminal,getAvailableMoves, BoardState, Cell} from '../../utils'
 import useSound from "../../utils/useSound";
 import Text from "../../components/text/text";
+import { useSettings, difficulties } from "../../contexts/settings-context";
+
 
 const screen_width = Dimensions.get("screen").width;
 
@@ -28,6 +30,8 @@ export default function SinglePlayerGame() : ReactElement{
 
     });
     const playSound = useSound();
+
+    const {settings} = useSettings();
     
     const gameResult = isTerminal(state);
 
@@ -107,8 +111,10 @@ export default function SinglePlayerGame() : ReactElement{
                         const best = getBestMove(
                             state, 
                             !isHumanMaximizing,
-                            0,
-                            2);
+                            0, parseInt(settings ?
+                            settings.difficulty: "-1")
+                            )
+                            ;
 
                         insertCell(best, isHumanMaximizing ? "o" : "x");
                         setTurn("HUMAN");
@@ -124,7 +130,8 @@ export default function SinglePlayerGame() : ReactElement{
             <SafeAreaView style= {styles.container}>
                 <View>
                     <Text style={styles.dificuldade}>
-                        Dificuldade: Hard
+                        Dificuldade: {settings ? difficulties[settings.difficulty]:
+                        "impossivel"}
                     </Text>
                 </View>
 

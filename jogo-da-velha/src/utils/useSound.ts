@@ -2,11 +2,13 @@
 import {useRef,useEffect} from "react";
 import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
-import {useSounds} from '../utils'
+import {useSounds} from '../utils';
+import { useSettings } from "../contexts/settings-context";
 
 type SoundType = "pop2" | "draw" | "lost" | "win"
 
 export default function useSound() : (sound:SoundType) => void{
+    const {settings} = useSettings();
     const pop2SoundRef = useRef<Audio.Sound | null>(null);
     const drawSoundRef = useRef<Audio.Sound | null>(null);
     const lostSoundRef = useRef<Audio.Sound | null>(null);
@@ -22,7 +24,13 @@ export default function useSound() : (sound:SoundType) => void{
         }
         try{
             const status = await soundsMap[sound].current?.getStatusAsync();
-            status && status.isLoaded && soundsMap[sound].current?.replayAsync();
+            status &&
+            status.isLoaded && 
+            settings?.sounds &&
+            soundsMap[sound].current?.replayAsync();
+            if (settings?.haptics){
+
+            
 
             switch(sound){
                 case "pop2":
@@ -44,6 +52,7 @@ export default function useSound() : (sound:SoundType) => void{
                 default:
                     break;
             }
+        }
         }catch(error){
             console.log(error)
         }

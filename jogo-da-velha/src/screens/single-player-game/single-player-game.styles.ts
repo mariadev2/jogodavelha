@@ -19,12 +19,11 @@ const styles = StyleSheet.create({
 
     },
     dificuldade:{
-        textAlign: "left",
-        fontSize: 26,
+        textAlign: "center",
+        fontSize: 20,
         color: colors.preto,
         marginBottom: 20,
         top: -90,
-        left: -300
 
     },
     results:{
