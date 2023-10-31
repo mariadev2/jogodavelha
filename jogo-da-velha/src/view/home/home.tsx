@@ -25,7 +25,7 @@ export default function Home({navigation}:HomeProps): ReactElement{
                        <Image style={styles.logo} source={require('../../utils/assets/logo-app.png')} />
                        <Image style={styles.oldWoman} source={require('../../utils/assets/old-woman.png')} />
                         {user && (
-                                <Text>Olá, seja bem vindo {user.username}</Text>
+                                <Text style={{fontSize: 16, paddingTop: 10}}>Olá, seja bem vindo {user.username}</Text>
                             )
                         }
                        <View style={styles.buttonContainer}>
@@ -39,6 +39,13 @@ export default function Home({navigation}:HomeProps): ReactElement{
                             styleText={undefined}
                         />
                         <ButtonComponent 
+                            onPress={() => {
+                                if (user) {
+                                    navigation.navigate("MultiPlayerHome");
+                                }else{
+                                    navigation.navigate("Login", {redirect: "MultiPlayerHome"});
+                                }
+                            } } 
                             title={"Jogar online"} 
                             loading={false} 
                             style={undefined} 

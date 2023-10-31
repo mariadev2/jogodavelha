@@ -5,3 +5,5 @@ export {default as Login} from './login/login';
 export {default as SignUp} from './signup/signup';
 export {default as ChangePassword} from './change-password/change-password';
 export {default as ForgotPassword} from './forgot-password/forgot-password';
+export {default as MultiPlayerHome} from './multiplayer-home/multiplayer-home';
+export {default as MultiPlayerGame} from './multiplayer-game/multiplayer-game';

@@ -5,17 +5,26 @@ import styles from './background-page.styles';
 
 type BackgroundProps = {
     children: ReactNode,
+    withoutScroll?: boolean
 }
 
-export default function BackgroundPage({children}: BackgroundProps): ReactElement {
+export default function BackgroundPage({children, withoutScroll}: BackgroundProps): ReactElement {
   return (
-    <ScrollView > 
-        <View style={styles.container}>
-          <Image source={require('../../utils/assets/icon-top.png')} style={styles.iconTop}/>
-          <Image source={require('../../utils/assets/icon-button.png')} style={styles.iconBottom}/>
-          {children}
-        </View>
-    </ScrollView>
+   withoutScroll ? 
+                <View style={styles.container}>
+                  <Image source={require('../../utils/assets/icon-top.png')} style={styles.iconTop}/>
+                  <Image source={require('../../utils/assets/icon-button.png')} style={styles.iconBottom}/>
+                  {children}
+                </View> 
+                : 
+                <ScrollView > 
+                   <View style={styles.container}>
+                      <Image source={require('../../utils/assets/icon-top.png')} style={styles.iconTop}/>
+                      <Image source={require('../../utils/assets/icon-button.png')} style={styles.iconBottom}/>
+                      {children}
+                    </View>
+                </ScrollView>
         
   )
 }
+

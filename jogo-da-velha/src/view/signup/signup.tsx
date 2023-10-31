@@ -21,9 +21,9 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
     const emailRef = useRef<NativeTextInput | null>(null);
     const usernameRef = useRef<NativeTextInput | null>(null);
     const [form, setForm] = useState({
-        username: 'Nemotest',
-        email: 'nykeria1@oabibleh.com',
-        name: 'Nemo nemot',
+        username: 'player1',
+        email: 'vakaxe9587@monutri.com',
+        name: 'player1',
         password: 'test123456'
     })
     const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
         setLoading(true);
         const {username, password, email, name} = form;
         try {
-            await Auth.signUp({
+           const test =  await Auth.signUp({
                 username,
                 password,
                 attributes:{
@@ -45,6 +45,8 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
                     name
                 }
             })
+            console.log(test);
+            
             setStep('otp')
         } catch (error ) {
             var erro = error as Error;
@@ -69,7 +71,9 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
     const resendCode = async (username: string) => {
         setResending(true);
         try {
-            await Auth.resendSignUp(username);
+           const test = await Auth.resendSignUp(username);
+           console.log(test);
+           
         } catch (error ) {
             Alert.alert("Error!", (error as Error).message || "An error has occurred!");
         }
