@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useState, useRef } from "react";
-import { TouchableOpacity, Animated } from "react-native";
+import React, { ReactElement, useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
 import  Text  from "../../components/text/text";
 import { useAuth } from "../../contexts/auth-context";
 import { PlayerGameType } from "./multiplayer-home.graphql";
@@ -33,9 +33,7 @@ export default function GameItem({
         );
         if (game.winner === user.username) return "win";
         if (game.winner === opponent?.player?.username) return "loss";
-        // null means game is draw
         if (game.winner === null) return "draw";
-        // default condition for avoidign ts error
         return false;
     };
     const game = playerGame?.game;
@@ -75,6 +73,7 @@ export default function GameItem({
             }
         }
     }, []);
+    
 
     return (
         <TouchableOpacity style={styles.cardHistory} onPress={onPress}>

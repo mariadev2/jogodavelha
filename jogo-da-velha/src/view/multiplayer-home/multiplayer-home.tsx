@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { BackgroundPage, ButtonComponent } from '../../components'
 import styles from './multiplayer-home.styles'
 import { useAuth } from '../../contexts/auth-context';
-import { PlayerGamesType, getPlayer } from './multiplayer-home.graphql';
+import { PlayerGameType, PlayerGamesType, getPlayer } from './multiplayer-home.graphql';
 import { API, graphqlOperation } from 'aws-amplify'
 import {GraphQLResult} from '@aws-amplify/api/lib'
 import { GetPlayerQuery } from '../../API'
@@ -26,7 +26,8 @@ type MultiPlayerHomeProps = {
 
 export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : ReactElement {
     const { user } = useAuth();
-    const [playerGames, setPlayerGames] = useState<PlayerGamesType>([]);
+    
+    const [playerGames, setPlayerGames] = useState<PlayerGameType[] | null>(null);
     const [nextToken, setNextToken] = useState<string | null | undefined>(null);
     const [refreshing, setRefreshing] = useState(false);
     const [playersModal, setPlayersModal] = useState(false);
@@ -47,7 +48,7 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
                     })
                 )) as GraphQLResult<GetPlayerQuery>;
                 if (player.data?.getPlayer?.games) {
-                    const newPlayerGames = player.data.getPlayer.games.items || [];
+                    const newPlayerGames = player?.data?.getPlayer?.games?.items || [];
                     setPlayerGames(
                         !playerGames || nextToken === null
                             ? newPlayerGames
@@ -57,8 +58,6 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
                    
                 }
             } catch (error) {
-                console.log(error);
-                
                 Alert.alert("Error!", "An error has occurred!");
             }
             setRefreshing(false);
@@ -67,8 +66,10 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
     };
     
     useEffect(()  => {
-          fetchPlayer(null)
+          fetchPlayer(null, true);
+          
     }, []);
+
     return (
         <BackgroundPage withoutScroll={true}>
             {
@@ -77,13 +78,15 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
                                 data={playerGames} 
                                 renderItem={({item})=> 
                                 <GameItem onPress={()=>{
-                                    if (item?.game) {
-                                        navigation.navigate('MultiplayerGame', {gameID: item?.game.id});
-                                    }
-                                }} 
-                                playerGame={item}/>}
+                                        if (item?.game) {
+                                            navigation.navigate('MultiplayerGame', {gameID: item?.game.id});
+                                        }
+                                    }} 
+                                    playerGame={item}
+                                />}
                                 keyExtractor={player => player ? player.game.id : `${new Date().getTime()}`}
                                 refreshControl={
+                                    
                                     <RefreshControl
                                         refreshing={refreshing}
                                         onRefresh={() => {

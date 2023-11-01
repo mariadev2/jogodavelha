@@ -21,10 +21,10 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
     const emailRef = useRef<NativeTextInput | null>(null);
     const usernameRef = useRef<NativeTextInput | null>(null);
     const [form, setForm] = useState({
-        username: 'player1',
-        email: 'vakaxe9587@monutri.com',
-        name: 'player1',
-        password: 'test123456'
+        username: '',
+        email: '',
+        name: '',
+        password: ''
     })
     const [loading, setLoading] = useState(false);
     const [confirming, setConfirming] = useState(false);
@@ -37,7 +37,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
         setLoading(true);
         const {username, password, email, name} = form;
         try {
-           const test =  await Auth.signUp({
+           await Auth.signUp({
                 username,
                 password,
                 attributes:{
@@ -45,7 +45,6 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
                     name
                 }
             })
-            console.log(test);
             
             setStep('otp')
         } catch (error ) {
@@ -71,9 +70,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
     const resendCode = async (username: string) => {
         setResending(true);
         try {
-           const test = await Auth.resendSignUp(username);
-           console.log(test);
-           
+           await Auth.resendSignUp(username);
         } catch (error ) {
             Alert.alert("Error!", (error as Error).message || "An error has occurred!");
         }
@@ -93,7 +90,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
                 <>
                     <Image style={styles.logo} source={require('../../utils/assets/logo-app.png')} />
                     <View style={{padding: 20, height: 300}}>
-                        <Text style={{marginTop: 80}}>Insira o código enviado par ao seu e-mail</Text>
+                        <Text style={{marginTop: 80}}>Insira o código enviado para o seu e-mail</Text>
                         {confirming ? (<ActivityIndicator/>) : 
                             (
                             <>

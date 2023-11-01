@@ -17,8 +17,8 @@ export default function Login({navigation, route}: LoginProps): ReactElement {
     const redirect = route.params?.redirect;
     const passwordRef = useRef<NativeTextInput | null>(null);
     const [form, setForm] = useState({
-        username: 'player1',
-        password: 'test123456'
+        username: '',
+        password: ''
     })
     const [loading, setLoading] = useState(false);
     const setFormInput = (key: keyof typeof form, value: string)=>{

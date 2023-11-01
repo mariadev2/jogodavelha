@@ -17,6 +17,10 @@ export default function Home({navigation}:HomeProps): ReactElement{
     const {user} = useAuth();
     const [signingOut, setSigningOut] = useState(false);
 
+    const userValid = user?.username.toLowerCase().replace(/(?:^|\s)\S/g, function(a: string) {
+        return a.toUpperCase();
+    });
+
     
     return (
         <SafeAreaView>
@@ -25,7 +29,7 @@ export default function Home({navigation}:HomeProps): ReactElement{
                        <Image style={styles.logo} source={require('../../utils/assets/logo-app.png')} />
                        <Image style={styles.oldWoman} source={require('../../utils/assets/old-woman.png')} />
                         {user && (
-                                <Text style={{fontSize: 16, paddingTop: 10}}>Olá, seja bem vindo {user.username}</Text>
+                                <Text style={{fontSize: 16, paddingTop: 10}}>Olá, seja bem vindo {userValid}</Text>
                             )
                         }
                        <View style={styles.buttonContainer}>
