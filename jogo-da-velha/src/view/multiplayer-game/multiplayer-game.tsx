@@ -11,6 +11,8 @@ import {GraphQLResult} from '@aws-amplify/api/lib'
 import { BackgroundPage, Board, ButtonComponent, Text } from '../../components';
 import { API, graphqlOperation } from 'aws-amplify';
 import getErrorMessage from '../../utils/ts/getErrorMessage';
+import Observable from 'zen-observable';
+import { onUpdateGameById } from '../../utils/ts/common.graphql';
 
 
 type GameType = GetGameQuery["getGame"];
@@ -100,21 +102,30 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
 
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      if (gameID) {
-        const getGameRes = (await API.graphql(
-            graphqlOperation(getGame, {
-                id: gameID
-            })
-        )) as GraphQLResult<GetGameQuery>;
-          
-        if (getGameRes.data?.getGame) {
-          setGame(getGameRes.data.getGame);
-          setGameID(gameID);
-        }
-    }
-    }, 1000);
-    return () => clearInterval(interval);
+    if (game && (game.status === "REQUESTED" || game.status === "ACTIVE")) {
+      const gameUpdates = (API.graphql(
+          graphqlOperation(onUpdateGameById, {
+              id: gameID
+          })
+      ) as unknown) as Observable<{ [key: string]: any }>;
+
+      const subscription = gameUpdates.subscribe({
+          next: ({ value }) => {
+              const newGame = value.data.onUpdateGameById;
+              if (newGame && game) {
+                  const { status, state, winner, turn } = newGame;
+                  setGame({ ...game, status, state, winner, turn });
+                  if (user) {
+                      user.username === turn ? playSound("pop1") : playSound("pop2");
+                  }
+              }
+          }
+      });
+
+      return () => {
+          subscription.unsubscribe();
+      };
+    } 
   }, [gameID]);
 
   useEffect(() => {
