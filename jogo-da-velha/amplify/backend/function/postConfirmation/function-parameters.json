@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "api": {
+      "tictac": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

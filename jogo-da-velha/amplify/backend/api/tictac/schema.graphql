@@ -1,0 +1,109 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+
+type Mutation{
+    startGame(invitee: String!) : GameData 
+        @function(name:"startGame-${env}")
+        @aws_cognito_user_pools
+        @aws_iam
+        @aws_api_key
+       
+
+    playMove(game: ID!, index: Int!): GameData 
+        @function(name: "playMove-${env}")
+        @aws_cognito_user_pools
+        @aws_iam
+        @aws_api_key
+     
+        
+}
+
+type Subscription {
+    onUpdateGameById(id: ID!): Game
+        @aws_subscribe(mutations: ["updateGame"])
+        @aws_cognito_user_pools
+        @aws_iam
+        @aws_api_key
+}
+
+type GameData {
+    id: ID!
+    status: GameStatus!
+    turn: String!
+    state: [Symbol]!
+    winner: String
+}
+
+type Player
+    @model
+    @searchable
+    @auth(
+        rules: [
+            { allow: private, operations: [read, create, update, delete] }
+            { allow: private, provider: iam }
+            { allow: public , provider: apiKey,  operations: [create,read,update]}
+        ]
+    )
+    {
+    id: ID!
+    cognitoID: String!
+    username: String! @primaryKey
+    name: String!
+    email: AWSEmail!
+    games: [PlayerGame] @hasMany(indexName: "byPlayer", fields: ["username"])
+}
+
+type Game
+    @model
+    @auth(
+        rules: [
+           
+            { allow: private, operations: [read, create, update, delete] }
+            { allow: private, provider: iam }
+            { allow: public , provider: apiKey,  operations: [create,read,update]}
+        ]
+    )
+    {
+    id: ID!
+    status: GameStatus!
+    owners: [String!]!
+    initiator: String!
+    turn: String!
+    state: [Symbol]!
+    winner: String
+    players: [PlayerGame] @hasMany(indexName: "byGame", fields: ["id"])
+}
+
+type PlayerGame
+  @model
+   @auth(
+        rules: [
+           
+            { allow: private, operations: [read, create, update, delete] }
+            { allow: private, provider: iam }
+            { allow: public , provider: apiKey,  operations: [create,read,update]}
+        ]
+    )
+    {
+    id: ID!
+    gameID: ID! @index(name: "byGame")
+    playerUsername: String! @index(name: "byPlayer", sortKeyFields:["createdAt"])
+    createdAt: String!
+    owners: [String!]!
+    game: Game! @hasOne(fields: ["gameID"])
+    player: Player! @hasOne(fields: ["playerUsername"])
+}
+
+enum GameStatus {
+    REQUESTED
+    DECLINED
+    ACTIVE
+    FINISHED
+    CANCELLED
+}
+
+enum Symbol {
+    x
+    o
+}
