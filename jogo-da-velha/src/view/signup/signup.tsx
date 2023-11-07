@@ -62,7 +62,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
             navigation.navigate("Login");
             Alert.alert("Sucesso!", "Você pode realizar login");
         } catch (error ) {
-            Alert.alert("Error!", (error as Error).message || "An error has occurred!");
+            Alert.alert("Erro!", (error as Error).message || "Aconteceu algum erro!");
         }
         setConfirming(false);
     };
@@ -72,7 +72,7 @@ export default function SignUp({navigation, route}: SignUpProps): ReactElement {
         try {
            await Auth.resendSignUp(username);
         } catch (error ) {
-            Alert.alert("Error!", (error as Error).message || "An error has occurred!");
+            Alert.alert("Erro!", (error as Error).message || "Aconteceu algum erro!");
         }
         setResending(false);
     };

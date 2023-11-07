@@ -76,8 +76,8 @@ type Game
 }
 
 type PlayerGame
-  @model
-   @auth(
+    @model
+    @auth(
         rules: [
            
             { allow: private, operations: [read, create, update, delete] }

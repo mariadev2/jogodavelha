@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { BackgroundPage, ButtonComponent } from '../../components'
 import styles from './multiplayer-home.styles'
 import { useAuth } from '../../contexts/auth-context';
-import { PlayerGameType, PlayerGamesType, getPlayer } from './multiplayer-home.graphql';
+import { PlayerGameType, getPlayer } from './multiplayer-home.graphql';
 import { API, graphqlOperation } from 'aws-amplify'
 import {GraphQLResult} from '@aws-amplify/api/lib'
 import { GetPlayerQuery } from '../../API'
@@ -58,7 +58,7 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
                    
                 }
             } catch (error) {
-                Alert.alert("Error!", "An error has occurred!");
+                Alert.alert("Erro!", "Aconteceu um erro!");
             }
             setRefreshing(false);
         }
@@ -124,7 +124,7 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
                                 }}
                                 style={styles.btnNewGame}
                             >
-                                <Text style={styles.textNewGame} >New Game</Text>
+                                <Text style={styles.textNewGame} >Nova partida</Text>
                             </TouchableOpacity>
                 
                        </View> 

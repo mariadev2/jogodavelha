@@ -3,7 +3,7 @@ import {  AppBootstrap } from './components';
 import Navigator from "./configs/navigator";
 import  {SettingsProvider } from "./contexts/settings-context";
 import { AuthProvider } from "./contexts/auth-context";
-import { Amplify, Auth } from 'aws-amplify'
+import { Amplify } from 'aws-amplify'
 import aws_exports from './aws-exports'
 
 Amplify.configure(aws_exports)

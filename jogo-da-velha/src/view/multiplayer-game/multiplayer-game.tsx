@@ -34,8 +34,6 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
     const [gameID, setGameID] = useState<string | null>(null);
     const [game, setGame] = useState<GameType | null>(null);
     const [loading, setLoading] = useState(false);
-    const [finished, setFinished] = useState(false);
-    const [test, setTest] = useState(false);
     const [playingTurn, setPlayingTurn] = useState<Moves | false>(false);
     const { user } = useAuth();
     const gameResult = game ? isTerminal(game.state as BoardState) : false;
