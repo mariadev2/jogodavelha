@@ -33,9 +33,9 @@ export default function ChangePassword({navigation}: LoginProps): ReactElement {
                 oldPassword: "",
                 newPassword: ""
             });
-            Alert.alert("Success!", "Password Changed Successfully!");
+            Alert.alert("Sucesso!", "Senha alterada com sucesso!");
         } catch (error) {
-            Alert.alert("Error!", (error as Error).message || "An error has occurred!");
+            Alert.alert("Erro!", (error as Error).message || "Aconteceu um erro!");
         }
         setLoading(false);
     };
