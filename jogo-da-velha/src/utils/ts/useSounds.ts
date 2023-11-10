@@ -20,9 +20,7 @@ export default function useSounds(): (sound: SoundType) => void {
         };
         try {
             const status = await soundsMap[sound].current?.getStatusAsync();
-            status &&
-                status.isLoaded &&
-                soundsMap[sound].current?.replayAsync();
+            status && status.isLoaded && soundsMap[sound].current?.replayAsync();
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +51,6 @@ export default function useSounds(): (sound: SoundType) => void {
         };
         loadSounds();
         return () => {
-            //unload sounds
             popSoundObject && popSoundObject.unloadAsync();
             pop2SoundObject && pop2SoundObject.unloadAsync();
             winSoundObject && winSoundObject.unloadAsync();

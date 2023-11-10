@@ -23,6 +23,15 @@ export default function GameItem({
     const [playerGame, setPlayerGame] = useState(playerGameProp);
     const { user } = useAuth();
     if (!user || !playerGame) return null;
+    /**
+     * The function `getResult` takes a `playerGame` object and returns the result of the game (win,
+     * loss, draw) based on the game status and the username of the player.
+     * @param {PlayerGameType} playerGame - The `playerGame` parameter is of type `PlayerGameType`. It
+     * represents a game played by a player and contains information about the game, such as the
+     * status, players, and winner.
+     * @returns The function `getResult` returns one of the following values: "win", "loss", "draw", or
+     * false.
+     */
     const getResult = (playerGame: PlayerGameType): "win" | "loss" | "draw" | false => {
         if (!playerGame || !user) return false;
 
@@ -43,6 +52,8 @@ export default function GameItem({
         playerGame => playerGame?.player?.username !== user.username
     );
 
+    /* The `useEffect` hook is used to perform side effects in a functional component. In this case,
+    the `useEffect` hook is used to subscribe to updates for a specific game. */
     useEffect(() => {
         
         if (game && (game.status === "REQUESTED" || game.status === "ACTIVE")) {
