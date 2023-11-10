@@ -33,6 +33,17 @@ export default function MultiPlayerHome({ navigation }: MultiPlayerHomeProps) : 
     const [playersModal, setPlayersModal] = useState(false);
     
 
+    /**
+     * The function fetchPlayer is an asynchronous function that retrieves player data from an API and
+     * updates the state with the retrieved data.
+     * @param {string | null} nextToken - The `nextToken` parameter is a string that represents a token
+     * used for pagination. It is used to fetch the next set of results from a paginated API endpoint.
+     * If `nextToken` is `null`, it means that there are no more results to fetch.
+     * @param [init=false] - The `init` parameter is a boolean value that indicates whether this is the
+     * initial fetch or not. It is used to determine whether to show a loading indicator or not. If
+     * `init` is `true`, it means it is the initial fetch and the loading indicator should be shown. If
+     * `init
+     */
     const fetchPlayer = async (nextToken: string | null, init = false) => {
         if (user) {
             if (nextToken == null && !init) {

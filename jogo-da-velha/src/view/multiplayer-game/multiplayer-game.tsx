@@ -40,11 +40,17 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
     const playSound = useSounds();
     const opponentUsername = game && user && game.owners.find(p => p !== user.username);
 
+    /**
+     * The `initGame` function is an asynchronous function that initializes a game by starting a new
+     * game or retrieving an existing game from the server.
+     */
     const initGame = async () => {
       setLoading(true)
       let gameID = existingGameID;
       
       try {
+         /* This code block is checking if the `gameID` is null or undefined. If it is, it means that a
+         new game needs to be started. */
           if (!gameID) {
               const startGameRes = (await API.graphql(
                   graphqlOperation(startGame, {
@@ -57,8 +63,10 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
               }
           }
 
+        /* This code block is checking if the `gameID` is not null or undefined. If it is not null or
+        undefined, it means that a game already exists and we need to retrieve the game data from
+        the server. */
           if (gameID) {
-            
             const getGameRes = (await API.graphql(
                 graphqlOperation(getGame, {
                     id: gameID
@@ -73,11 +81,17 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
           
       } catch (error) {
         
-          Alert.alert("Error!", getErrorMessage(error));
+          Alert.alert("Error!", getErrorMessage(error as any));
       }
       setLoading(false)
-  };
+    };
 
+ /**
+  * The function `playTurn` is an asynchronous function that updates the game state and makes a move in
+  * a game.
+  * @param {Moves} index - The `index` parameter is the move index that is being played. It is used to
+  * identify the specific move being played in the `playMove` mutation.
+  */
   const playTurn = async (index: Moves) => {
     setPlayingTurn(index);
     try {
@@ -93,20 +107,26 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
             setGame({ ...game, status, state, winner, turn });
         }
     } catch (error) {
-        Alert.alert("Error!", getErrorMessage(error));
+        Alert.alert("Error!", getErrorMessage(error as any));
     }
     setPlayingTurn(false);
-};
+  };
 
 
+/* The `useEffect` hook is used to subscribe to updates on a game. It listens for changes in the game
+state and updates the local game state accordingly. */
   useEffect(() => {
     if (game && (game.status === "REQUESTED" || game.status === "ACTIVE")) {
+     /* is creating an observable
+     subscription to listen for updates on a specific game. */
       const gameUpdates = (API.graphql(
           graphqlOperation(onUpdateGameById, {
               id: gameID
           })
       ) as unknown) as Observable<{ [key: string]: any }>;
 
+      /* The code `const subscription = gameUpdates.subscribe({ ... })` is creating a subscription to
+      listen for updates on a specific game. */
       const subscription = gameUpdates.subscribe({
           next: ({ value }) => {
               const newGame = value.data.onUpdateGameById;
@@ -126,6 +146,9 @@ export default function MultiplayerGame({ navigation, route }: MultiPlayerGamePr
     } 
   }, [gameID]);
 
+  /* The `useEffect` hook is used to call the `initGame` function when the component is first rendered.
+  The empty dependency array `[]` ensures that the `initGame` function is only called once, when the
+  component is mounted. */
   useEffect(() => {
     initGame()
    }, [])

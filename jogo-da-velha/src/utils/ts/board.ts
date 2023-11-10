@@ -27,6 +27,14 @@ export const isFull = (state: BoardState): boolean =>{
     return state.every( cell => cell);
 }
 
+/**
+ * The function `getAvailableMoves` takes a board state as input and returns an array of available
+ * moves.
+ * @param {BoardState} state - The `state` parameter represents the current state of the board. It is
+ * an array that represents the cells of the board. Each element in the array can be either `null`
+ * (indicating an empty cell) or a player's symbol (e.g., "X" or "O").
+ * @returns an array of available moves.
+ */
 export const getAvailableMoves = (state: BoardState): Moves[] => {
     const moves: Moves[] = [];
     state.forEach((cell, index) => {

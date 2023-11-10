@@ -28,6 +28,16 @@ export default function SinglePlayerGame(): ReactElement{
     });
 
     
+   /**
+    * The `insertCell` function updates the state of a board by inserting a symbol ("x" or "o") into a
+    * specific cell, and plays a sound based on the symbol inserted.
+    * @param {number} cell - The `cell` parameter represents the index of the cell in the `state` array
+    * where the symbol will be inserted.
+    * @param {"x" | "o"} symbol - The `symbol` parameter is a string that can only have two possible
+    * values: "x" or "o". It represents the symbol that will be inserted into the cell.
+    * @returns The function `insertCell` does not return anything. It has a return type of `void`,
+    * which means it does not return any value.
+    */
     const insertCell = (cell: number, symbol: "x" | "o"): void => {
         const stateCopy: BoardState = [...state];
         if (stateCopy[cell] || isTerminal(stateCopy)) return;
@@ -41,6 +51,14 @@ export default function SinglePlayerGame(): ReactElement{
         }
     };
 
+    /**
+     * The function `getWinner` determines the winner of a game based on the symbol and whether the
+     * human player is maximizing.
+     * @param {Cell} winnerSymbol - The `winnerSymbol` parameter represents the symbol of the winning
+     * player in a game. It can be either "x" or "o".
+     * @returns The function `getWinner` returns one of three possible values: 'human', 'bot', or
+     * 'draw'.
+     */
     const getWinner = (winnerSymbol: Cell): 'human' | 'bot' | 'draw' => {
         if (winnerSymbol === "x") {
             return isHumanMaximizing ? 'human' : 'bot';
@@ -62,6 +80,8 @@ export default function SinglePlayerGame(): ReactElement{
         setTurn(Math.random() < 0.5 ? 'human' : 'bot');
     };
 
+    /* The `useEffect` hook is used to perform side effects in a functional component. In this case,
+    the `useEffect` hook is being used to update the game state and handle the game logic. */
     useEffect(() => {
         if (gameResult) {
             const winner = getWinner(gameResult.winner);
